@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 19, 2021 at 10:42 AM
+-- Generation Time: Jul 19, 2021 at 03:15 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -41,18 +41,19 @@ CREATE TABLE `passwd` (
 CREATE TABLE `predictions` (
   `id` int(11) NOT NULL,
   `gender` tinytext NOT NULL,
-  `age` tinytext NOT NULL
+  `age` tinytext NOT NULL,
+  `imageDir` tinytext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `predictions`
 --
 
-INSERT INTO `predictions` (`id`, `gender`, `age`) VALUES
-(1, 'female', '38'),
-(2, 'female', '26'),
-(3, 'female', '28'),
-(4, 'male', '31');
+INSERT INTO `predictions` (`id`, `gender`, `age`, `imageDir`) VALUES
+(1, 'female', '38', ''),
+(2, 'female', '26', ''),
+(3, 'female', '28', ''),
+(4, 'male', '31', '');
 
 --
 -- Indexes for dumped tables
