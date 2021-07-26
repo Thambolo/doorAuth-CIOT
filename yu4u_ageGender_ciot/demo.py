@@ -8,7 +8,8 @@ from contextlib import contextmanager
 from omegaconf import OmegaConf
 from tensorflow.keras.utils import get_file
 from src.factory import get_model
-
+import subprocess
+import glob
 
 pretrained_model = "https://github.com/yu4u/age-gender-estimation/releases/download/v0.6/EfficientNetB3_224_weights.11-3.44.hdf5"
 modhash = '6d7f7b7ced093a8b3ef6399163da6ece'
@@ -62,17 +63,20 @@ def yield_images():
 
 
 def yield_images_from_dir(image_dir):
-    image_dir = Path(image_dir)
+    #image_dir = Path(image_dir)
 
-    for image_path in image_dir.glob("*.*"):
-        img = cv2.imread(str(image_path), 1)
+    #for image_path in image_dir.glob("*.*"):
+    image_path = newest("./yu4u_ageGender_ciot/dave_imgdir/")
+    img = cv2.imread(str(image_path), 1)
+    if img is not None:
+        h, w, _ = img.shape
+        r = 640 / max(w, h)
+        yield cv2.resize(img, (int(w * r), int(h * r)))
 
-        if img is not None:
-            h, w, _ = img.shape
-            r = 640 / max(w, h)
-            yield cv2.resize(img, (int(w * r), int(h * r)))
-
-
+def newest(path):
+    files = os.listdir(path)
+    paths = [os.path.join(path, basename) for basename in files]
+    return max(paths, key=os.path.getctime)
 def main():
     args = get_args()
     weight_file = args.weight_file
@@ -127,8 +131,20 @@ def main():
                 gender = "M" if predicted_genders[i][0] < 0.5 else "F"
                 label = "{}, {}".format(age,gender)
                 draw_label(img, (d.left(), d.top()), label)
+                print(os.getcwd())
+                
+                #list_of_files = glob.glob('./yu4u_ageGender_ciot/dave_imgdir/*') # * means all if need specific format then *.csv
+                #latest_file = max(list_of_files, key=os.path.getctime,default=0)
+                imageDir = newest("./yu4u_ageGender_ciot/dave_imgdir/")
+                print(imageDir)
+                cmd = f"python ageGenderInsert.py --age {age} --gender {gender} --imageDir {imageDir}"
+                print("Calling ageGenderInsert.py...")
+                process1= subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                print(process1.returncode)
+                print(process1.stderr)
+                print(process1.stdout)
 
-        cv2.imshow("result", img)
+        #cv2.imshow("result", img)
         key = cv2.waitKey(-1) if image_dir else cv2.waitKey(30)
 
         if key == 27:  # ESC

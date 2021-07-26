@@ -1,3 +1,5 @@
+import sys
+import argparse
 import mysql.connector as mysql
 import random
 from datetime import datetime
@@ -9,14 +11,28 @@ user = "root",
 passwd = "",
 database = "ep0403"
 )
+def get_args():
+    parser = argparse.ArgumentParser(description="This script detects faces from web cam input, "
+                                                 "and estimates age and gender for the detected faces.",
+                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument("--age", type=str, default=None,
+                        help="age given by demo.py")
+    parser.add_argument("--gender", type=str, default=None,
+                        help="gender given by demo.py")
+    parser.add_argument("--imageDir", type=str, default=None,
+                        help="directory of image demo.py")
+    args = parser.parse_args()
+    return args
+args= get_args()
+
 ## tweeter
 tweetApiKey = "Z57OA2M6UVW36FGR" #add our own key
 
 ## get ML data age and gender
-age = random.randrange(16,50)
-genderList = ['male','female']
-gender = random.choice(genderList)
-imageDir = "/yu4u_ageGender_ciot/dave_imgdir/img1.jpg"
+age = args.age#random.randrange(16,50) #sys.argv[1]
+#genderList = ['male','female']
+gender = args.gender#random.choice(genderList) #sys.argv[2]
+imageDir = args.imageDir
 
 now = datetime.now()
 current_time = now.strftime("%d/%m/%Y, %H:%M:%S")
