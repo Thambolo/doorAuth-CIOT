@@ -2,6 +2,7 @@ from pathlib import Path
 import cv2
 import dlib
 import numpy as np
+import os
 import argparse
 from contextlib import contextmanager
 from omegaconf import OmegaConf
@@ -76,7 +77,8 @@ def main():
     args = get_args()
     weight_file = args.weight_file
     margin = args.margin
-    image_dir = args.image_dir
+    #image_dir = args.image_dir #original code
+    image_dir = "./yu4u_ageGender_ciot/dave_imgdir"
 
     if not weight_file:
         weight_file = get_file("EfficientNetB3_224_weights.11-3.44.hdf5", pretrained_model, cache_subdir="pretrained_models",
@@ -121,8 +123,9 @@ def main():
 
             # draw results
             for i, d in enumerate(detected):
-                label = "{}, {}".format(int(predicted_ages[i]),
-                                        "M" if predicted_genders[i][0] < 0.5 else "F")
+                age = int(predicted_ages[i])
+                gender = "M" if predicted_genders[i][0] < 0.5 else "F"
+                label = "{}, {}".format(age,gender)
                 draw_label(img, (d.left(), d.top()), label)
 
         cv2.imshow("result", img)

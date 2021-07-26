@@ -16,6 +16,7 @@ tweetApiKey = "Z57OA2M6UVW36FGR" #add our own key
 age = random.randrange(16,50)
 genderList = ['male','female']
 gender = random.choice(genderList)
+imageDir = "/yu4u_ageGender_ciot/dave_imgdir/img1.jpg"
 
 now = datetime.now()
 current_time = now.strftime("%d/%m/%Y, %H:%M:%S")
@@ -24,9 +25,9 @@ requests.post('https://api.thingspeak.com/apps/thingtweet/1/statuses/update',
 
 cursor = db.cursor()
 ## defining the Query
-query = "INSERT INTO predictions (age, gender) VALUES (%s, %s)"
+query = "INSERT INTO predictions (age, gender, imageDir) VALUES (%s, %s, %s)"
 ## storing values in a variable
-values = (age, gender)
+values = (age, gender,imageDir)
 ## executing the query with values
 cursor.execute(query, values)
 ## to make final output we have to run the 'commit()' method of the database object
