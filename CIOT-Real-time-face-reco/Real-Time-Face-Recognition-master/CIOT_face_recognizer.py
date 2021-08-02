@@ -4,6 +4,25 @@ import os
 import requests
 import mysql.connector as mysql
 import datetime
+import subprocess
+
+from pathlib import Path
+import cv2
+import dlib
+import numpy as np
+import os
+import argparse
+from contextlib import contextmanager
+from omegaconf import OmegaConf
+from tensorflow.keras.utils import get_file
+import subprocess
+import glob
+
+import sys
+import argparse
+import mysql.connector as mysql
+import random
+import requests #added
 
 db = mysql.connect(
     host = "localhost",
@@ -123,6 +142,14 @@ else:
         print(dt_string)
         cv2.imwrite(f'../../yu4u_ageGender_ciot/dave_imgdir/Intruder-{dt_string}.jpg', image)
         del(camera)
+        os.chdir('../../')
+        cmd = f"python ./yu4u_ageGender_ciot/demo.py"
+        
+        process1= subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        print("Calling ageGender...")
+        print(process1.returncode)
+        print(process1.stderr)
+        print(process1.stdout)
     else:
         print("password correct")
         print("Uploading data to thingspeak...")
