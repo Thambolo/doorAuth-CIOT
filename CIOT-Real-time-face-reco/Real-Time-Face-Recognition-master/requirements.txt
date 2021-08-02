@@ -1,0 +1,6 @@
+pip install opencv-contrib-python
+pip install numpy
+pip install requests
+pip install mysql-connector-python
+pip install pillow
+pip install opencv-python
