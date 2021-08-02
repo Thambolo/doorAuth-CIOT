@@ -7,9 +7,9 @@ import mysql.connector as mysql
 db = mysql.connect(
     host = "localhost",
     user = "root",
-    passwd = "1qwer$#@!",
+    passwd = "",
     database = "ep0403",
-    port = 3306
+    port = 3307
 )
 
 cursor = db.cursor()
@@ -26,7 +26,7 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 
 id = 0
 # names related to ids: The names associated to the ids: 1 for Mohamed, 2 for Jack, etc...
-names = ['None', 'JunDe'] # add a name into this list
+names = ['None', 'JunDe','Dave'] # add a name into this list
 #Video Capture
 cam = cv2.VideoCapture(0)
 cam.set(3, 640)

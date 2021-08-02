@@ -36,8 +36,9 @@ imageDir = args.imageDir
 
 now = datetime.now()
 current_time = now.strftime("%d/%m/%Y, %H:%M:%S")
+ageRange = f"{int(age)-4}-{int(age)+4}"
 requests.post('https://api.thingspeak.com/apps/thingtweet/1/statuses/update',
-            json={'api_key':tweetApiKey,'status':'ALERT: Possible Intruder!\nTime: {time}\nGender: {g}\nAge: {a}'.format(time=current_time,g=gender,a=age)})
+            json={'api_key':tweetApiKey,'status':'ALERT: Possible Intruder!\nTime: {time}\nGender: {g}\nAge: {a}'.format(time=current_time,g=gender,a=ageRange)})
 
 cursor = db.cursor()
 ## defining the Query
@@ -48,5 +49,6 @@ values = (age, gender,imageDir)
 cursor.execute(query, values)
 ## to make final output we have to run the 'commit()' method of the database object
 db.commit()
+
 print(cursor.rowcount, "row, Gender:{gender} Age:{age} inserted".format(gender=gender,age=age))
 

@@ -61,12 +61,15 @@ def yield_images():
 
             yield img
 
+global_image_path = ""
 
 def yield_images_from_dir(image_dir):
+    global global_image_path
     #image_dir = Path(image_dir)
 
     #for image_path in image_dir.glob("*.*"):
     image_path = newest("./yu4u_ageGender_ciot/dave_imgdir/")
+    global_image_path = image_path
     img = cv2.imread(str(image_path), 1)
     if img is not None:
         h, w, _ = img.shape
@@ -133,9 +136,8 @@ def main():
                 draw_label(img, (d.left(), d.top()), label)
                 print(os.getcwd())
                 
-                #list_of_files = glob.glob('./yu4u_ageGender_ciot/dave_imgdir/*') # * means all if need specific format then *.csv
-                #latest_file = max(list_of_files, key=os.path.getctime,default=0)
-                imageDir = newest("./yu4u_ageGender_ciot/dave_imgdir/")
+                #imageDir = newest("./yu4u_ageGender_ciot/dave_imgdir/")
+                imageDir = global_image_path
                 print(imageDir)
                 cmd = f"python ageGenderInsert.py --age {age} --gender {gender} --imageDir {imageDir}"
                 print("Calling ageGenderInsert.py...")
