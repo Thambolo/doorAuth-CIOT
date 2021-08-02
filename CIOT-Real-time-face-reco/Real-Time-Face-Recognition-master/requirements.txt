@@ -4,3 +4,5 @@ pip install requests
 pip install mysql-connector-python
 pip install pillow
 pip install opencv-python
+
+pip install --force-reinstall opencv-contrib-python==4.1.2.30
