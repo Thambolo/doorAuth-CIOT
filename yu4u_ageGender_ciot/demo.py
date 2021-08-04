@@ -134,17 +134,15 @@ def main():
                 gender = "M" if predicted_genders[i][0] < 0.5 else "F"
                 label = "{}, {}".format(age,gender)
                 draw_label(img, (d.left(), d.top()), label)
-                print(os.getcwd())
                 
                 #imageDir = newest("./yu4u_ageGender_ciot/dave_imgdir/")
                 imageDir = global_image_path
-                print(imageDir)
                 cmd = f"python ageGenderInsert.py --age {age} --gender {gender} --imageDir {imageDir}"
                 print("Calling ageGenderInsert.py...")
                 process1= subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 print(process1.returncode)
-                print(process1.stderr)
-                print(process1.stdout)
+                print(process1.stderr.decode("utf-8"))
+                print(process1.stdout.decode("utf-8"))
 
         #cv2.imshow("result", img)
         key = cv2.waitKey(-1) if image_dir else cv2.waitKey(30)

@@ -148,8 +148,8 @@ else:
         process1= subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         print("Calling ageGender...")
         print(process1.returncode)
-        print(process1.stderr)
-        print(process1.stdout)
+        print(process1.stderr.decode("utf-8"))
+        print(process1.stdout.decode("utf-8"))
     else:
         print("password correct")
         print("Uploading data to thingspeak...")

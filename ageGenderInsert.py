@@ -36,7 +36,9 @@ imageDir = args.imageDir
 
 now = datetime.now()
 current_time = now.strftime("%d/%m/%Y, %H:%M:%S")
+
 ageRange = f"{int(age)-4}-{int(age)+4}"
+
 requests.post('https://api.thingspeak.com/apps/thingtweet/1/statuses/update',
             json={'api_key':tweetApiKey,'status':'ALERT: Possible Intruder!\nTime: {time}\nGender: {g}\nAge: {a}'.format(time=current_time,g=gender,a=ageRange)})
 
