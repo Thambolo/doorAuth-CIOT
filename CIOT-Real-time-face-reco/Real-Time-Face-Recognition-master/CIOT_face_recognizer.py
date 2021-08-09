@@ -47,7 +47,7 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 id = 0
 # names related to ids: The names associated to the ids: 1 for Mohamed, 2 for Jack, etc...
 
-names = ['None', 'JunDe','JunDe', 'JunDe'] # add a name into this list
+names = ['None', 'JunDe','Dave', 'JunDe'] # add a name into this list
 
 #Video Capture
 cam = cv2.VideoCapture(0)
@@ -78,7 +78,7 @@ while (not authenticated):
         cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
         id, confidence = recognizer.predict(gray[y:y + h, x:x + w])
         #print(confidence)
-        if (confidence < 0):
+        if (confidence < 45):
             #print(names)
             id = names[0]
             confidence = "  {0}%".format(round(100 - confidence))
@@ -95,7 +95,7 @@ while (not authenticated):
 
         cv2.putText(img, str(id), (x + 5, y - 5), font, 1, (255, 255, 255), 2)
         cv2.putText(img, str(confidence), (x + 5, y + h - 5), font, 1, (255, 255, 0), 1)
-        if count > 10: #fail counter
+        if count > 50: #fail counter
             authenticated = "false"
     
     cv2.imshow('camera', img)
@@ -125,7 +125,7 @@ else:
     failcount = 0
 
     while failcount < 2:
-        guess = int(input("WHAT IS THE PASSWORD FOOLISH ONE!\n"))
+        guess = int(input("Facial Recognition Failed\nPlease enter keypass: "))
         for i in passwordlist:
             if guess == i:
                 failcount = 3
