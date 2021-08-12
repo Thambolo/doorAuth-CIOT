@@ -1,9 +1,12 @@
-mysql-connector-python
+Required Packages:
+pip install mysql-connector-python
 pip install opencv-contrib-python
 pip install numpy
 pip install requests
-pip install mysql-connector-python
 pip install pillow
-pip install opencv-python?
+pip install opencv-python
 
 pip install --force-reinstall opencv-contrib-python==4.1.2.30
+
+If the program still does not work do:
+pip uninstall opencv-python
